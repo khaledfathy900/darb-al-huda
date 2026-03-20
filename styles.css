@@ -1464,3 +1464,29 @@ body {
     text-align: center;
     color: var(--gray);
 }
+
+.offline-indicator {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-150%);
+    background: var(--gray);
+    color: var(--white);
+    padding: 12px 25px;
+    border-radius: 50px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    z-index: 3000;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.offline-indicator.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.offline-icon {
+    font-size: 1.2rem;
+}

@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إسلام | Islamic Web Portal</title>
+    <title> درب الهدى | DARB AL-HUDA </title>
+    <meta name="description" content="Your gateway to Islamic knowledge, prayer times, and spiritual growth">
+    <meta name="theme-color" content="#1a5f4a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☪</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☪</text></svg>">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -183,6 +192,8 @@
                 <button class="dua-tab" data-category="evening">Evening</button>
                 <button class="dua-tab" data-category="sleep">Sleep</button>
                 <button class="dua-tab" data-category="travel">Travel</button>
+                <button class="dua-tab" data-category="food">Food</button>
+                <button class="dua-tab" data-category="bathroom">Bathroom</button>
             </div>
             <div class="duas-container" id="duasContainer">
             </div>
@@ -293,7 +304,21 @@
         <span class="toast-message" id="toastMessage"></span>
     </div>
 
+    <div class="offline-indicator" id="offlineIndicator">
+        <span class="offline-icon">📴</span>
+        <span class="offline-text">You are offline - App works offline!</span>
+    </div>
+
     <script src="quran_text.js"></script>
     <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registered'))
+                    .catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
 </body>
 </html>

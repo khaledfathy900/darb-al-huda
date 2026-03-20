@@ -67,6 +67,21 @@ const duas = {
             arabic: "اَللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ",
             translation: "O Allah, I ask You for forgiveness and well-being in this world and the next.",
             meaning: "Seeking Forgiveness & Well-being"
+        },
+        {
+            arabic: "اَللَّهُمَّ عَافِنِي فِي بَدَنِي، اَللَّهُمَّ عَافِنِي فِي سَمْعِي، اَللَّهُمَّ عَافِنِي فِي بَصَرِي",
+            translation: "O Allah, grant me wellness in my body, O Allah, grant me wellness in my hearing, O Allah, grant me wellness in my sight.",
+            meaning: "Protection for Body Parts"
+        },
+        {
+            arabic: "سُبْحَانَ اللهِ وَبِحَمْدِهِ",
+            translation: "Glory and praise be to Allah.",
+            meaning: "Morning Dhikr"
+        },
+        {
+            arabic: "لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+            translation: "There is no god but Allah alone, He has no partner. His is the sovereignty and His is the praise, and He is over all things omnipotent.",
+            meaning: "Tawheed Declaration"
         }
     ],
     evening: [
@@ -84,6 +99,16 @@ const duas = {
             arabic: "اَللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ",
             translation: "O Allah, I seek refuge in You from anxiety and sorrow.",
             meaning: "Seeking Refuge from Worry"
+        },
+        {
+            arabic: "أَعُوذُ بِكَلِمَاتِ اللهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+            translation: "I seek refuge in the perfect words of Allah from the evil of what He has created.",
+            meaning: "Protection from Evil"
+        },
+        {
+            arabic: "اَللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ",
+            translation: "O Allah, I ask You for forgiveness and well-being in this world and the next.",
+            meaning: "Forgiveness & Well-being"
         }
     ],
     sleep: [
@@ -101,6 +126,16 @@ const duas = {
             arabic: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
             translation: "In Your name, O Allah, I die and I live.",
             meaning: "Life and Death"
+        },
+        {
+            arabic: "اَللَّهُمَّ بِاسْمِكَ أَمُوتُ وَأَحْيَا",
+            translation: "O Allah, in Your name I die and live.",
+            meaning: "Sleeping Dua"
+        },
+        {
+            arabic: "سُبْحَانَ اللهِ",
+            translation: "Glory be to Allah.",
+            meaning: "Dhikr Before Sleep"
         }
     ],
     travel: [
@@ -113,46 +148,122 @@ const duas = {
             arabic: "لاَ إِلَهَ إِلاَّ اللهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
             translation: "There is none worthy of worship except Allah alone, no partner with Him. His is the sovereignty and His is the praise, and He is over all things omnipotent.",
             meaning: "Talbiyah/Travel Supplication"
+        },
+        {
+            arabic: "سُبْحَانَكَ إِنِّي ظَلَمْتُ نَفْسِي فَاغْفِرْ لِي",
+            translation: "Glory be to You, I have wronged myself, so forgive me.",
+            meaning: "Seeking Forgiveness"
+        }
+    ],
+    food: [
+        {
+            arabic: "بِسْمِ اللهِ، وَعَلَى بَرَكَةِ اللهِ",
+            translation: "In the name of Allah, and with the blessing of Allah.",
+            meaning: "Before Eating"
+        },
+        {
+            arabic: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ",
+            translation: "All praise is due to Allah who fed us, gave us drink, and made us Muslims.",
+            meaning: "After Eating"
+        },
+        {
+            arabic: "الْلَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ",
+            translation: "O Allah, bless what You have provided us and protect us from the punishment of the Fire.",
+            meaning: "Blessing for Food"
+        }
+    ],
+    bathroom: [
+        {
+            arabic: "الْلَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبْثِ وَالْخَبَائِثِ",
+            translation: "O Allah, I seek refuge in You from male and female devils.",
+            meaning: "Entering Bathroom"
+        },
+        {
+            arabic: "غُفْرَانَكَ",
+            translation: "I ask Your forgiveness.",
+            meaning: "Leaving Bathroom"
         }
     ]
 };
 
 const islamicEvents = [
     {
-        name: "ليلة القدر",
-        arabic: "ليلة القدر",
-        date: "27 رمضان",
-        description: "ليلة القدر خير من ألف شهر"
-    },
-    {
-        name: "عيد الفطر",
-        arabic: "عيد الفطر",
-        date: "1 شوال",
-        description: "عيد الفطر السعيد"
-    },
-    {
-        name: "عيد الأضحى",
-        arabic: "عيد الأضحى",
-        date: "10 ذو الحجة",
-        description: "يوم النحر"
+        name: "New Islamic Year",
+        arabic: "رأس السنة الهجرية",
+        date: "1 محرم",
+        description: "纪念先知穆罕默德从麦加迁徙到麦地那"
     },
     {
         name: "عاشوراء",
         arabic: "عاشوراء",
         date: "10 محرم",
-        description: "صيام يوم عاشوراء"
+        description: "صيام يوم عاشوراء - يوم نجاة موسى عليه السلام"
     },
     {
-        name: "مولد النبي",
-        arabic: "مولد النبي صلى الله عليه وسلم",
+        name: "المولد النبوي",
+        arabic: "المولد النبوي الشريف",
         date: "12 ربيع الأول",
-        description: "ذكرى ميلاد النبي الأكرم"
+        description: "ذكرى ميلاد النبي الأكرم محمد صلى الله عليه وسلم"
     },
     {
         name: "الإسراء والمعراج",
         arabic: "الإسراء والمعراج",
         date: "27 رجب",
-        description: "رحلة الإسراء والمعراج"
+        description: "رحلة الإسراء من مكة إلى المسجد الأقصى والمعراج إلى السماء"
+    },
+    {
+        name: "ليلة النصف من شعبان",
+        arabic: "ليلة النصف من شعبان",
+        date: "15 شعبان",
+        description: "ليلة البَرَكَة والعتق من النار"
+    },
+    {
+        name: "بداية رمضان",
+        arabic: "أول يوم من رمضان",
+        date: "1 رمضان",
+        description: "بداية شهر الصيام المبارك"
+    },
+    {
+        name: "ليلة القدر",
+        arabic: "ليلة القدر",
+        date: "27 رمضان",
+        description: "ليلة القدر خير من ألف شهر - ليلة تقدير الأقدار"
+    },
+    {
+        name: "عيد الفطر",
+        arabic: "عيد الفطر السعيد",
+        date: "1 شوال",
+        description: "عيد انتهاء شهر رمضان المبارك"
+    },
+    {
+        name: "يوم عرفة",
+        arabic: "يوم عرفة",
+        date: "9 ذو الحجة",
+        description: "يوم الوقوف بعرفة - أعظم الأيام"
+    },
+    {
+        name: "عيد الأضحى",
+        arabic: "عيد الأضحى المبارك",
+        date: "10 ذو الحجة",
+        description: "عيد الأضحى - يوم النحر"
+    },
+    {
+        name: "أيام التشريق",
+        arabic: "أيام التشريق",
+        date: "11-13 ذو الحجة",
+        description: "أيام النحر والتكبير"
+    },
+    {
+        name: "غزوة بدر",
+        arabic: "غزوة بدر الكبرى",
+        date: "17 رمضان",
+        description: "أول معركة كبرى في تاريخ الإسلام"
+    },
+    {
+        name: "فتح مكة",
+        arabic: "فتح مكة",
+        date: "20 رمضان",
+        description: "ذكرى فتح مدينة مكة المكرمة"
     }
 ];
 
@@ -818,12 +929,35 @@ function updateHijriDate() {
                          'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 
                          'ذو القعدة', 'ذو الحجة'];
     
-    const now = new Date();
-    const hijriYear = 1447;
-    const hijriMonth = hijriMonths[9];
-    const hijriDay = 1;
+    const hijriDate = gregorianToHijri(new Date());
+    const hijriYear = hijriDate.year;
+    const hijriMonth = hijriMonths[hijriDate.month - 1];
+    const hijriDay = hijriDate.day;
     
     document.getElementById('currentHijri').textContent = `${hijriDay} ${hijriMonth} ${hijriYear}هـ`;
+}
+
+function gregorianToHijri(date) {
+    const gregorianDate = new Date(date);
+    const gYear = gregorianDate.getFullYear();
+    const gMonth = gregorianDate.getMonth() + 1;
+    const gDay = gregorianDate.getDate();
+    
+    let jd = Math.floor((1461 * (gYear + 4800 + Math.floor((gMonth - 14) / 12))) / 4) +
+             Math.floor((367 * (gMonth - 2 - 12 * Math.floor((gMonth - 14) / 12))) / 12) -
+             Math.floor((3 * Math.floor((gYear + 4900 + Math.floor((gMonth - 14) / 12)) / 100)) / 4) +
+             gDay - 32075;
+    
+    let l = jd - 1948440 + 10632;
+    let n = Math.floor((l - 1) / 10631);
+    l = l - 10631 * n + 354;
+    let j = Math.floor((10985 - l) / 5316) * Math.floor((50 * l) / 17719) + Math.floor(l / 5670) * Math.floor((43 * l) / 15238);
+    l = l - Math.floor((30 - j) / 15) * Math.floor((17719 * j) / 50) - Math.floor(j / 16) * Math.floor((15238 * j) / 43) + 29;
+    let hMonth = Math.floor((24 * l) / 709);
+    let hDay = l - Math.floor((709 * hMonth) / 24);
+    let hYear = 30 * n + j - 30;
+    
+    return { year: hYear, month: hMonth, day: hDay };
 }
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1012,3 +1146,26 @@ function goToAyah(surahNum, ayahNum) {
         }
     }, 100);
 }
+
+function initOfflineSupport() {
+    const offlineIndicator = document.getElementById('offlineIndicator');
+    
+    function updateOnlineStatus() {
+        if (!navigator.onLine) {
+            offlineIndicator.classList.add('show');
+        } else {
+            offlineIndicator.classList.remove('show');
+        }
+    }
+    
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+    
+    if (!navigator.onLine) {
+        updateOnlineStatus();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initOfflineSupport();
+});
