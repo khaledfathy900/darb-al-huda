@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إسلام | Islamic Web Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="geometric-pattern"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">☪</span>
+                <span class="logo-text">Islam</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#quran">Quran</a></li>
+                <li><a href="#prayer">Prayer Times</a></li>
+                <li><a href="#duas">Duas</a></li>
+                <li><a href="#adkar">Adkar</a></li>
+                <li><a href="#events">Events</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <h1>Welcome to Islamic Portal</h1>
+            <p class="hero-subtitle">Your gateway to Islamic knowledge, prayer times, and spiritual growth</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" id="openQuranBtn">
+                    <span>Read Quran</span>
+                    <span class="btn-icon">📖</span>
+                </button>
+                <button class="btn btn-secondary" id="todaysDuasBtn">
+                    <span>Daily Duas</span>
+                    <span class="btn-icon">🤲</span>
+                </button>
+            </div>
+        </div>
+        <div class="hero-decoration">
+            <div class="star">✦</div>
+            <div class="star">✦</div>
+            <div class="star">✦</div>
+        </div>
+    </header>
+
+    <section class="prayer-section" id="prayer">
+        <div class="container">
+            <div class="section-header">
+                <h2>أوقات الصلاة</h2>
+                <p id="currentDate"></p>
+            </div>
+            <div class="prayer-cards" id="prayerCards">
+                <div class="prayer-card" data-prayer="fajr">
+                    <div class="prayer-icon">🌅</div>
+                    <h3>Fajr</h3>
+                    <p class="prayer-arabic">الفجر</p>
+                    <p class="prayer-time" id="fajrTime">04:30</p>
+                    <p class="prayer-countdown" id="fajrCountdown"></p>
+                </div>
+                <div class="prayer-card" data-prayer="sunrise">
+                    <div class="prayer-icon">🌄</div>
+                    <h3>Sunrise</h3>
+                    <p class="prayer-arabic">الشروق</p>
+                    <p class="prayer-time" id="sunriseTime">05:58</p>
+                    <p class="prayer-countdown" id="sunriseCountdown"></p>
+                </div>
+                <div class="prayer-card" data-prayer="dhuhr">
+                    <div class="prayer-icon">☀️</div>
+                    <h3>Dhuhr</h3>
+                    <p class="prayer-arabic">الظهر</p>
+                    <p class="prayer-time" id="dhuhrTime">11:56</p>
+                    <p class="prayer-countdown" id="dhuhrCountdown"></p>
+                </div>
+                <div class="prayer-card" data-prayer="asr">
+                    <div class="prayer-icon">🌤️</div>
+                    <h3>Asr</h3>
+                    <p class="prayer-arabic">العصر</p>
+                    <p class="prayer-time" id="asrTime">15:22</p>
+                    <p class="prayer-countdown" id="asrCountdown"></p>
+                </div>
+                <div class="prayer-card" data-prayer="maghrib">
+                    <div class="prayer-icon">🌅</div>
+                    <h3>Maghrib</h3>
+                    <p class="prayer-arabic">المغرب</p>
+                    <p class="prayer-time" id="maghribTime">18:05</p>
+                    <p class="prayer-countdown" id="maghribCountdown"></p>
+                </div>
+                <div class="prayer-card" data-prayer="isha">
+                    <div class="prayer-icon">🌙</div>
+                    <h3>Isha</h3>
+                    <p class="prayer-arabic">العشاء</p>
+                    <p class="prayer-time" id="ishaTime">19:23</p>
+                    <p class="prayer-countdown" id="ishaCountdown"></p>
+                </div>
+            </div>
+            <div class="next-prayer-banner" id="nextPrayerBanner">
+                <span class="next-label">Next Prayer:</span>
+                <span class="next-name" id="nextPrayerName">Dhuhr</span>
+                <span class="next-time" id="nextPrayerTime">in 2 hours 30 minutes</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="quran-section" id="quran">
+        <div class="container">
+            <div class="section-header">
+                <h2>القرآن الكريم</h2>
+                <p>Read and reflect upon the words of Allah</p>
+            </div>
+            <div class="quran-audio-player">
+                <div class="reciter-select">
+                    <label>القارئ:</label>
+                    <select id="reciterSelect">
+                        <option value="minshawi">محمد صديق المنشاوي</option>
+                    </select>
+                </div>
+                <div class="audio-controls">
+                    <button class="audio-btn" id="playCurrentBtn" title="تشغيل">
+                        <span class="play-icon">▶️</span>
+                    </button>
+                    <button class="audio-btn" id="pauseBtn" title="إيقاف مؤقت">
+                        <span class="pause-icon">⏸️</span>
+                    </button>
+                    <button class="audio-btn" id="stopBtn" title="إيقاف">
+                        <span class="stop-icon">⏹️</span>
+                    </button>
+                </div>
+                <div class="audio-progress">
+                    <span id="currentSurahName">اختر سورة</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="audioProgress"></div>
+                    </div>
+                    <span id="audioTime">00:00 / 00:00</span>
+                </div>
+            </div>
+            <div class="quran-search">
+                <input type="text" id="quranSearchInput" placeholder="ابحث عن سورة أو آية..." autocomplete="off">
+                <div class="search-results" id="searchResults"></div>
+            </div>
+            <div class="quran-verse-container">
+                <div class="quran-verse" id="quranVerse">
+                    <div class="verse-arabic" id="verseArabic"></div>
+                    <div class="verse-english" id="verseEnglish"></div>
+                    <div class="verse-reference" id="verseReference"></div>
+                </div>
+                <div class="verse-controls">
+                    <button class="btn btn-icon-only" id="prevVerse">
+                        <span>◀</span>
+                    </button>
+                    <span class="verse-counter" id="verseCounter">1 / 10</span>
+                    <button class="btn btn-icon-only" id="nextVerse">
+                        <span>▶</span>
+                    </button>
+                </div>
+            </div>
+            <div class="surah-list" id="surahList"></div>
+        </div>
+    </section>
+
+    <section class="duas-section" id="duas">
+        <div class="container">
+            <div class="section-header">
+                <h2>Daily Duas</h2>
+                <p>Essential prayers for your daily life</p>
+            </div>
+            <div class="duas-tabs">
+                <button class="dua-tab active" data-category="morning">Morning</button>
+                <button class="dua-tab" data-category="evening">Evening</button>
+                <button class="dua-tab" data-category="sleep">Sleep</button>
+                <button class="dua-tab" data-category="travel">Travel</button>
+            </div>
+            <div class="duas-container" id="duasContainer">
+            </div>
+        </div>
+    </section>
+
+    <section class="adkar-section" id="adkar">
+        <div class="container">
+            <div class="section-header">
+                <h2>Adkar & Tasbeeh</h2>
+                <p>Remembrance of Allah with digital counter</p>
+            </div>
+            <div class="adkar-container">
+                <div class="tasbeeh-display">
+                    <div class="tasbeeh-circle" id="tasbeehBtn">
+                        <span class="tasbeeh-count" id="tasbeehCounter">0</span>
+                        <span class="tasbeeh-label">Tap to count</span>
+                    </div>
+                    <div class="tasbeeh-buttons">
+                        <button class="tasbeeh-dhikr active" data-dhikr="subhanallah" data-count="33">SubhanAllah</button>
+                        <button class="tasbeeh-dhikr" data-dhikr="alhamdullilah" data-count="33">AlHamduliLlah</button>
+                        <button class="tasbeeh-dhikr" data-dhikr="allahuakbar" data-count="33">AllahuAkbar</button>
+                    </div>
+                    <div class="tasbeeh-controls">
+                        <button class="btn btn-counter" id="incrementBtn">+</button>
+                        <button class="btn btn-counter-reset" id="resetBtn">Reset</button>
+                        <button class="btn btn-counter-reset" id="setBtn">Set Goal</button>
+                    </div>
+                </div>
+                <div class="adkar-list">
+                    <div class="adkar-card" data-dhikr="subhanallah">
+                        <div class="adkar-arabic">سُبْحَانَ اللهِ</div>
+                        <div class="adkar-translation">"Glory be to Allah"</div>
+                        <div class="adkar-count" id="subhanallahCount">0 / 33</div>
+                        <button class="adkar-btn" onclick="countDhikr('subhanallah')">+</button>
+                    </div>
+                    <div class="adkar-card" data-dhikr="alhamdullilah">
+                        <div class="adkar-arabic">الْحَمْدُ لِلَّهِ</div>
+                        <div class="adkar-translation">"Praise be to Allah"</div>
+                        <div class="adkar-count" id="alhamdullilahCount">0 / 33</div>
+                        <button class="adkar-btn" onclick="countDhikr('alhamdullilah')">+</button>
+                    </div>
+                    <div class="adkar-card" data-dhikr="allahuakbar">
+                        <div class="adkar-arabic">اللهُ أَكْبَرُ</div>
+                        <div class="adkar-translation">"Allah is the Greatest"</div>
+                        <div class="adkar-count" id="allahuakbarCount">0 / 33</div>
+                        <button class="adkar-btn" onclick="countDhikr('allahuakbar')">+</button>
+                    </div>
+                    <div class="adkar-card" data-dhikr="laillahaillallah">
+                        <div class="adkar-arabic">لَا إِلَهَ إِلَّا اللهُ</div>
+                        <div class="adkar-translation">"There is no god but Allah"</div>
+                        <div class="adkar-count" id="laillahaillallahCount">0 / 100</div>
+                        <button class="adkar-btn" onclick="countDhikr('laillahaillallah')">+</button>
+                    </div>
+                    <div class="adkar-card" data-dhikr="astaghfirullah">
+                        <div class="adkar-arabic">أَسْتَغْفِرُ اللهَ</div>
+                        <div class="adkar-translation">"I seek forgiveness from Allah"</div>
+                        <div class="adkar-count" id="astaghfirullahCount">0 / 100</div>
+                        <button class="adkar-btn" onclick="countDhikr('astaghfirullah')">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="events-section" id="events">
+        <div class="container">
+            <div class="section-header">
+                <h2>Islamic Calendar</h2>
+                <p>Important dates in the Islamic calendar</p>
+            </div>
+            <div class="hijri-date" id="hijriDate">
+                <div class="hijri-icon">🌙</div>
+                <div class="hijri-info">
+                    <span class="hijri-label">التاريخ الهجري</span>
+                    <span class="hijri-value" id="currentHijri">1 شوال 1447هـ</span>
+                </div>
+            </div>
+            <div class="events-grid" id="eventsGrid">
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-icon">☪</span>
+                    <span>درب الهدى-The path of guidance</span>
+                </div>
+                <p class="footer-quote">" إن مع العسر يسرا"  </p>
+                <p class="footer-copyright">© 2026 درب الهدى. All rights reserved.</p>
+                <P class="footer-">"هذا الموقع صدقة عني وعن عائلتي حفظها الله
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal" id="quranModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <h2 id="modalTitle">Quran Reader</h2>
+            <div class="modal-body" id="modalBody">
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <span class="toast-message" id="toastMessage"></span>
+    </div>
+
+    <script src="quran_text.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
