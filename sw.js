@@ -1,6 +1,6 @@
-const CACHE_NAME = 'darp-al-huda-v2';
-const STATIC_CACHE = 'static-v2';
-const DYNAMIC_CACHE = 'dynamic-v2';
+const CACHE_NAME = 'darp-al-huda-v4';
+const STATIC_CACHE = 'static-v4';
+const DYNAMIC_CACHE = 'dynamic-v4';
 
 const STATIC_ASSETS = [
     './',
@@ -85,26 +85,19 @@ self.addEventListener('fetch', (event) => {
 
     if (url.origin === 'https://everyayah.com') {
         event.respondWith(
-            caches.open(DYNAMIC_CACHE).then((cache) => {
-                return cache.match(request).then((cachedResponse) => {
-                    if (cachedResponse) {
-                        return cachedResponse;
-                    }
-                    return fetch(request)
-                        .then((networkResponse) => {
-                            if (networkResponse.ok) {
-                                cache.put(request, networkResponse.clone());
-                            }
-                            return networkResponse;
-                        })
-                        .catch(() => {
-                            return new Response('Audio not available offline', { 
-                                status: 503,
-                                headers: { 'Content-Type': 'text/plain' }
-                            });
+            fetch(request)
+                .then((response) => {
+                    if (response.ok) {
+                        const responseToCache = response.clone();
+                        caches.open(DYNAMIC_CACHE).then((cache) => {
+                            cache.put(request, responseToCache);
                         });
-                });
-            })
+                    }
+                    return response;
+                })
+                .catch(() => {
+                    return caches.match(request);
+                })
         );
         return;
     }
