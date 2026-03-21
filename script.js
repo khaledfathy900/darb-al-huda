@@ -191,79 +191,78 @@ const islamicEvents = [
         name: "New Islamic Year",
         arabic: "رأس السنة الهجرية",
         date: "1 محرم",
-        description: "纪念先知穆罕默德从麦加迁徙到麦地那"
+       
     },
     {
         name: "عاشوراء",
         arabic: "عاشوراء",
-        date: "10 محرم",
-        description: "صيام يوم عاشوراء - يوم نجاة موسى عليه السلام"
+        date: "10 محرم"
     },
     {
         name: "المولد النبوي",
         arabic: "المولد النبوي الشريف",
         date: "12 ربيع الأول",
-        description: "ذكرى ميلاد النبي الأكرم محمد صلى الله عليه وسلم"
+        
     },
     {
         name: "الإسراء والمعراج",
         arabic: "الإسراء والمعراج",
         date: "27 رجب",
-        description: "رحلة الإسراء من مكة إلى المسجد الأقصى والمعراج إلى السماء"
+        
     },
     {
         name: "ليلة النصف من شعبان",
         arabic: "ليلة النصف من شعبان",
         date: "15 شعبان",
-        description: "ليلة البَرَكَة والعتق من النار"
+       
     },
     {
         name: "بداية رمضان",
         arabic: "أول يوم من رمضان",
         date: "1 رمضان",
-        description: "بداية شهر الصيام المبارك"
+        
     },
     {
         name: "ليلة القدر",
         arabic: "ليلة القدر",
         date: "27 رمضان",
-        description: "ليلة القدر خير من ألف شهر - ليلة تقدير الأقدار"
+        
     },
     {
         name: "عيد الفطر",
         arabic: "عيد الفطر السعيد",
         date: "1 شوال",
-        description: "عيد انتهاء شهر رمضان المبارك"
+        
     },
     {
         name: "يوم عرفة",
         arabic: "يوم عرفة",
         date: "9 ذو الحجة",
-        description: "يوم الوقوف بعرفة - أعظم الأيام"
+        
     },
     {
         name: "عيد الأضحى",
         arabic: "عيد الأضحى المبارك",
         date: "10 ذو الحجة",
-        description: "عيد الأضحى - يوم النحر"
+        
     },
     {
         name: "أيام التشريق",
         arabic: "أيام التشريق",
         date: "11-13 ذو الحجة",
-        description: "أيام النحر والتكبير"
+        
     },
     {
         name: "غزوة بدر",
         arabic: "غزوة بدر الكبرى",
         date: "17 رمضان",
-        description: "أول معركة كبرى في تاريخ الإسلام"
+        
     },
     {
         name: "فتح مكة",
         arabic: "فتح مكة",
         date: "20 رمضان",
-        description: "ذكرى فتح مدينة مكة المكرمة"
+       
     }
 ];
 
@@ -281,9 +280,17 @@ let currentDhikr = 'subhanallah';
 
 let audioPlayer = new Audio();
 let currentPlayingSurah = null;
+let currentAyahIndex = 0;
+let ayahUrls = [];
 
 const reciterUrls = {
-    minshawi: 'https://server10.mp3quran.net/minsh/'
+    'minshawi': 'https://everyayah.com/data/Minshawy_Murattal_128kbps/',
+    'husary': 'https://everyayah.com/data/Husary_128kbps/',
+    'abdulbasit': 'https://everyayah.com/data/Abdul_Basit_Murattal_192kbps/',
+    'afasy': 'https://everyayah.com/data/Alafasy_128kbps/',
+    'shatri': 'https://everyayah.com/data/Abu_Bakr_Ash-Shaatree_128kbps/',
+    'dosari': 'https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/',
+    'rifai': 'https://everyayah.com/data/Hani_Rifai_192kbps/'
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -494,11 +501,10 @@ function renderSurahList() {
         card.innerHTML = `
             <span class="surah-number">${i}</span>
             <div class="surah-info">
-                <h3>${surah.englishName}</h3>
-                <p>${surah.name} - ${surah.ayahCount} Verses</p>
+                <h3 class="surah-arabic-name">${surah.name}</h3>
+                <span class="surah-ayah-count">${surah.ayahCount} آية</span>
             </div>
-            <button class="surah-play-btn" onclick="event.stopPropagation(); playSurah(${i})">▶️</button>
-            <span class="surah-arabic">${surah.name}</span>
+            <button class="surah-play-btn" onclick="event.stopPropagation(); playSurah(${i})" title="استماع">▶️</button>
         `;
         card.addEventListener('click', () => openSurahModal(i));
         surahList.appendChild(card);
@@ -533,6 +539,8 @@ function initAudioPlayer() {
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
             currentPlayingSurah = null;
+            currentAyahIndex = 0;
+            ayahUrls = [];
             document.getElementById('currentSurahName').textContent = 'اختر سورة';
             document.getElementById('audioTime').textContent = '00:00 / 00:00';
             document.getElementById('audioProgress').style.width = '0%';
@@ -548,26 +556,52 @@ function initAudioPlayer() {
         const currentSec = Math.floor(audioPlayer.currentTime % 60);
         const totalMin = Math.floor(audioPlayer.duration / 60);
         const totalSec = Math.floor(audioPlayer.duration % 60);
+        const ayahNum = currentAyahIndex + 1;
+        const totalAyahs = ayahUrls.length;
         
         document.getElementById('audioTime').textContent = 
-            `${String(currentMin).padStart(2, '0')}:${String(currentSec).padStart(2, '0')} / ${String(totalMin).padStart(2, '0')}:${String(totalSec).padStart(2, '0')}`;
+            `آية ${ayahNum}/${totalAyahs} • ${String(currentMin).padStart(2, '0')}:${String(currentSec).padStart(2, '0')} / ${String(totalMin).padStart(2, '0')}:${String(totalSec).padStart(2, '0')}`;
     });
     
     audioPlayer.addEventListener('ended', () => {
-        showToast('انتهت السورة');
-        document.getElementById('audioProgress').style.width = '0%';
+        if (currentAyahIndex < ayahUrls.length - 1) {
+            currentAyahIndex++;
+            audioPlayer.src = ayahUrls[currentAyahIndex];
+            audioPlayer.play().catch(err => {
+                console.error('Audio error:', err);
+            });
+        } else {
+            showToast('انتهت السورة');
+            document.getElementById('audioProgress').style.width = '0%';
+            currentPlayingSurah = null;
+            currentAyahIndex = 0;
+            ayahUrls = [];
+        }
     });
 }
 
 function playSurah(surahNumber) {
     const reciter = document.getElementById('reciterSelect').value;
-    const audioUrl = `${reciterUrls[reciter]}${String(surahNumber).padStart(3, '0')}.mp3`;
+    const baseUrl = reciterUrls[reciter];
     
-    audioPlayer.src = audioUrl;
-    audioPlayer.play();
+    const paddedSurah = String(surahNumber).padStart(3, '0');
+    const surah = quranText[surahNumber];
+    
+    ayahUrls = [];
+    for (let i = 1; i <= surah.ayahCount; i++) {
+        const paddedAyah = String(i).padStart(3, '0');
+        ayahUrls.push(`${baseUrl}${paddedSurah}${paddedAyah}.mp3`);
+    }
+    
+    currentAyahIndex = 0;
+    audioPlayer.src = ayahUrls[0];
+    audioPlayer.play().catch(err => {
+        showToast('حدث خطأ في تحميل الصوت');
+        console.error('Audio error:', err);
+    });
     currentPlayingSurah = surahNumber;
     
-    const surahName = quranText[surahNumber].name;
+    const surahName = surah.name;
     document.getElementById('currentSurahName').textContent = surahName;
     
     showToast(`جاري التشغيل: ${surahName}`);

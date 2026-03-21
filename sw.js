@@ -1,5 +1,8 @@
-const CACHE_NAME = 'islamic-web-v1';
-const ASSETS_TO_CACHE = [
+const CACHE_NAME = 'darp-al-huda-v2';
+const STATIC_CACHE = 'static-v2';
+const DYNAMIC_CACHE = 'dynamic-v2';
+
+const STATIC_ASSETS = [
     './',
     './index.html',
     './styles.css',
@@ -8,13 +11,31 @@ const ASSETS_TO_CACHE = [
     './manifest.json'
 ];
 
+const FONT_CACHE = 'fonts-v1';
+const FONT_URLS = [
+    'https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap'
+];
+
 self.addEventListener('install', (event) => {
     event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => {
-                return cache.addAll(ASSETS_TO_CACHE);
+        Promise.all([
+            caches.open(STATIC_CACHE).then((cache) => {
+                return cache.addAll(STATIC_ASSETS);
+            }),
+            caches.open(FONT_CACHE).then((cache) => {
+                return Promise.all(
+                    FONT_URLS.map(url => 
+                        fetch(url, { mode: 'cors' })
+                            .then(response => {
+                                if (response.ok) {
+                                    return cache.put(url, response);
+                                }
+                            })
+                            .catch(() => console.log('Font fetch failed, will work online'))
+                    )
+                );
             })
-            .then(() => self.skipWaiting())
+        ]).then(() => self.skipWaiting())
     );
 });
 
@@ -23,7 +44,8 @@ self.addEventListener('activate', (event) => {
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
-                    if (cacheName !== CACHE_NAME) {
+                    if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE && cacheName !== FONT_CACHE) {
+                        console.log('Deleting old cache:', cacheName);
                         return caches.delete(cacheName);
                     }
                 })
@@ -33,28 +55,94 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    const { request } = event;
+    const url = new URL(request.url);
+
+    if (request.method !== 'GET') {
+        return;
+    }
+
+    if (url.origin === 'https://fonts.googleapis.com' || url.origin === 'https://fonts.gstatic.com') {
+        event.respondWith(
+            caches.open(FONT_CACHE).then((cache) => {
+                return cache.match(request).then((cachedResponse) => {
+                    if (cachedResponse) {
+                        return cachedResponse;
+                    }
+                    return fetch(request).then((networkResponse) => {
+                        if (networkResponse.ok) {
+                            cache.put(request, networkResponse.clone());
+                        }
+                        return networkResponse;
+                    }).catch(() => {
+                        return new Response('Font not available offline', { status: 404 });
+                    });
+                });
+            })
+        );
+        return;
+    }
+
+    if (url.origin === 'https://everyayah.com') {
+        event.respondWith(
+            caches.open(DYNAMIC_CACHE).then((cache) => {
+                return cache.match(request).then((cachedResponse) => {
+                    if (cachedResponse) {
+                        return cachedResponse;
+                    }
+                    return fetch(request)
+                        .then((networkResponse) => {
+                            if (networkResponse.ok) {
+                                cache.put(request, networkResponse.clone());
+                            }
+                            return networkResponse;
+                        })
+                        .catch(() => {
+                            return new Response('Audio not available offline', { 
+                                status: 503,
+                                headers: { 'Content-Type': 'text/plain' }
+                            });
+                        });
+                });
+            })
+        );
+        return;
+    }
+
     event.respondWith(
-        caches.match(event.request)
+        caches.match(request)
             .then((cachedResponse) => {
                 if (cachedResponse) {
+                    event.waitUntil(
+                        fetch(request)
+                            .then((networkResponse) => {
+                                if (networkResponse.ok) {
+                                    caches.open(STATIC_CACHE)
+                                        .then((cache) => cache.put(request, networkResponse));
+                                }
+                            })
+                            .catch(() => {})
+                    );
                     return cachedResponse;
                 }
-                return fetch(event.request)
+                
+                return fetch(request)
                     .then((response) => {
-                        if (!response || response.status !== 200 || response.type !== 'basic') {
+                        if (!response || response.status !== 200 || response.type === 'opaque') {
                             return response;
                         }
+                        
                         const responseToCache = response.clone();
-                        caches.open(CACHE_NAME)
-                            .then((cache) => {
-                                cache.put(event.request, responseToCache);
-                            });
+                        caches.open(DYNAMIC_CACHE)
+                            .then((cache) => cache.put(request, responseToCache));
+                        
                         return response;
                     })
                     .catch(() => {
-                        if (event.request.destination === 'document') {
+                        if (request.destination === 'document' || request.destination === 'script' || request.destination === 'style') {
                             return caches.match('./index.html');
                         }
+                        return new Response('Offline', { status: 503 });
                     });
             })
     );
@@ -62,6 +150,10 @@ self.addEventListener('fetch', (event) => {
 
 self.addEventListener('message', (event) => {
     if (event.data === 'skipWaiting') {
+        self.skipWaiting();
+    }
+    
+    if (event.data && event.data.type === 'SKIP_WAITING') {
         self.skipWaiting();
     }
 });
